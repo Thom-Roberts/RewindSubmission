@@ -6,7 +6,9 @@ public class Rotation : MonoBehaviour {
 
     public float rotationAngle = 45f;
     [Range(0f, 2f)]
-    public float timeToRotate = 1f;
+    public float rotationTime = 1f;
+
+    private bool rotating = false;
 
     void Awake() {
         controls = new InputMaster();
@@ -30,17 +32,24 @@ public class Rotation : MonoBehaviour {
             Debug.Log("Mouse released");
             RotateDown();
         }
+
+        /*if(rotating) {
+            Vector3 to = transform.rotation.eulerAngles;
+            to.z = rotationAngle;
+            transform.eulerAngles = Vector3.Lerp(transform.rotation.eulerAngles, to, Time.deltaTime);
+        }*/
     }
 
     void RotateUp() {
-        LeanTween.rotate(gameObject, new Vector3(
-            transform.rotation.x, transform.rotation.y, rotationAngle
-        ), timeToRotate);
+        rotating = true;
+        LeanTween.rotate(gameObject, new Vector3(transform.rotation.x, transform.rotation.y, rotationAngle), rotationTime);
+        /*
+        LeanTween.value(gameObject, (val) => {
+            transform.Rotate(transform.rotation.x, transform.rotation.y, val);
+        }, transform.rotation.z, rotationAngle, timeToRotate);*/
     }
 
     void RotateDown() {
-        LeanTween.rotate(gameObject, new Vector3(
-            transform.rotation.x, transform.rotation.y, 0
-        ), timeToRotate);
+        LeanTween.rotate(gameObject, new Vector3(transform.rotation.x, transform.rotation.y, 0f), rotationTime);
     }
 }
