@@ -40,33 +40,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
-        },
-        {
-            ""name"": ""Triggers"",
-            ""id"": ""7f49276b-f628-4842-b036-d17fbbc0205e"",
-            ""actions"": [
-                {
-                    ""name"": ""Rotate"",
-                    ""type"": ""Button"",
-                    ""id"": ""7d133fd5-e462-49e4-8fc3-7580ab76063b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                }
-            ],
-            ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""25dec1e2-3896-4de7-888f-2dfbfda5cd48"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Rotate"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                }
-            ]
         }
     ],
     ""controlSchemes"": []
@@ -74,9 +47,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Rewind = m_Player.FindAction("Rewind", throwIfNotFound: true);
-        // Triggers
-        m_Triggers = asset.FindActionMap("Triggers", throwIfNotFound: true);
-        m_Triggers_Rotate = m_Triggers.FindAction("Rotate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -155,45 +125,8 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
-
-    // Triggers
-    private readonly InputActionMap m_Triggers;
-    private ITriggersActions m_TriggersActionsCallbackInterface;
-    private readonly InputAction m_Triggers_Rotate;
-    public struct TriggersActions
-    {
-        private @InputMaster m_Wrapper;
-        public TriggersActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Rotate => m_Wrapper.m_Triggers_Rotate;
-        public InputActionMap Get() { return m_Wrapper.m_Triggers; }
-        public void Enable() { Get().Enable(); }
-        public void Disable() { Get().Disable(); }
-        public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(TriggersActions set) { return set.Get(); }
-        public void SetCallbacks(ITriggersActions instance)
-        {
-            if (m_Wrapper.m_TriggersActionsCallbackInterface != null)
-            {
-                @Rotate.started -= m_Wrapper.m_TriggersActionsCallbackInterface.OnRotate;
-                @Rotate.performed -= m_Wrapper.m_TriggersActionsCallbackInterface.OnRotate;
-                @Rotate.canceled -= m_Wrapper.m_TriggersActionsCallbackInterface.OnRotate;
-            }
-            m_Wrapper.m_TriggersActionsCallbackInterface = instance;
-            if (instance != null)
-            {
-                @Rotate.started += instance.OnRotate;
-                @Rotate.performed += instance.OnRotate;
-                @Rotate.canceled += instance.OnRotate;
-            }
-        }
-    }
-    public TriggersActions @Triggers => new TriggersActions(this);
     public interface IPlayerActions
     {
         void OnRewind(InputAction.CallbackContext context);
-    }
-    public interface ITriggersActions
-    {
-        void OnRotate(InputAction.CallbackContext context);
     }
 }

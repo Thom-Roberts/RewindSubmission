@@ -2,17 +2,11 @@
 using UnityEngine.InputSystem;
 
 public class Rotation : MonoBehaviour {
-    public InputMaster controls;
-
     public float rotationAngle = 45f;
     [Range(0f, 2f)]
     public float rotationTime = 1f;
 
     private bool rotating = false;
-
-    void Awake() {
-        controls = new InputMaster();
-    }
 
     void Update() {
         Mouse mouse = InputSystem.GetDevice<Mouse>();
