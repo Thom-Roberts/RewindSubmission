@@ -1,0 +1,60 @@
+{
+    "name": "Input Master",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "76cf7c4e-fd6b-45d9-b8ce-d2bceefbc75d",
+            "actions": [
+                {
+                    "name": "Rewind",
+                    "type": "Button",
+                    "id": "c897de0d-0032-4a50-b116-77fb34f6aa45",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9aa5f890-acf2-40dc-8bf4-631e8f0a1e96",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rewind",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Triggers",
+            "id": "7f49276b-f628-4842-b036-d17fbbc0205e",
+            "actions": [
+                {
+                    "name": "Rotate",
+                    "type": "Button",
+                    "id": "7d133fd5-e462-49e4-8fc3-7580ab76063b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "25dec1e2-3896-4de7-888f-2dfbfda5cd48",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
