@@ -14,7 +14,7 @@ public class Level1Controls : MonoBehaviour
 
     void Start() {
         startingBallTransform = ball.transform;
-        ball.GetComponent<Rigidbody>().velocity = startSpeed * Vector3.right;
+        ball.GetComponent<Rigidbody2D>().velocity = startSpeed * Vector3.right;
 
         StartCoroutine(hideTutorialText());
     }

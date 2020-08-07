@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PositionStore : MonoBehaviour
+public class Rewind : MonoBehaviour
 {
 	public InputMaster controls;
 	[Range(0, 7)]
@@ -11,10 +11,11 @@ public class PositionStore : MonoBehaviour
 	[Range(0, 1)]
 	public float slowdownDuration = 0.8f;
 
-
+	
 	private List<PointInTime> points;
-	private Rigidbody rb;
+	private Rigidbody2D rb;
 	private bool rewinding = false;
+	private Vector3 mostRecentVelocity;
 
 	void Awake() {
 		controls = new InputMaster();
@@ -23,28 +24,30 @@ public class PositionStore : MonoBehaviour
 	}
 
 	void Start() {
-		rb = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody2D>();
 		points = new List<PointInTime>();
+		mostRecentVelocity = rb.velocity;
 	}
 
 	void FixedUpdate() {
 		if (rewinding)
-			Rewind();
+			DoRewind();
 		else
 			Record();
 	}
 
-	void Rewind() {
+	void DoRewind() {
 		if(points.Count > 0) {
 			PointInTime point = points[0];
 			transform.position = point.position;
 			transform.rotation = point.rotation;
-			rb.velocity = point.velocity;
+			mostRecentVelocity = point.velocity;
 
 			points.RemoveAt(0);
 		}
 		else {
 			StopRewind();
+			rb.velocity = mostRecentVelocity;
 		}
 	}
 
@@ -61,11 +64,15 @@ public class PositionStore : MonoBehaviour
 	void StartRewind() {
 		rewinding = true;
 		Time.timeScale = slowdownSpeed;
+		GetComponent<Rigidbody2D>().isKinematic = true;
+		GetComponent<Collider2D>().enabled = false;
 	}
 
 	void StopRewind() {
 		rewinding = false;
 		Time.timeScale = 1.0f;
+		GetComponent<Rigidbody2D>().isKinematic = false;
+		GetComponent<Collider2D>().enabled = true;
 	}
 
 	void OnEnable() {
