@@ -7,8 +7,8 @@ public class Rewind : MonoBehaviour
 	public InputMaster controls;
 	[Range(0, 7)]
 	public float maxRecordTime = 5f;
-	[Range(0, 1)]
-	public float slowdownSpeed = 0.5f;
+	[Range(0, 2)]
+	public float slowdownSpeed = 1.5f;
 	[Range(0, 1)]
 	public float slowdownDuration = 0.8f;
 
