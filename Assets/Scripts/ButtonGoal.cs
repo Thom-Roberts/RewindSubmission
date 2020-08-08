@@ -27,6 +27,7 @@ public class ButtonGoal : MonoBehaviour {
         }, currentColor.a, targetAlpha, scaleTime);
 
         goalRenderer.GetComponent<Goal>().active = true;
+        goalRenderer.GetComponent<Collider2D>().enabled = true;
     }
 
     private void DepressButton() {

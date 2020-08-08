@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Rewind : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class Rewind : MonoBehaviour
 	
 	private List<PointInTime> points;
 	private Rigidbody2D rb;
-	private bool rewinding = false;
+	public bool rewinding { get; private set; }
 	private Vector3 mostRecentVelocity;
 
 	void Awake() {
@@ -24,6 +25,7 @@ public class Rewind : MonoBehaviour
 	}
 
 	void Start() {
+		rewinding = false;
 		rb = GetComponent<Rigidbody2D>();
 		points = new List<PointInTime>();
 		mostRecentVelocity = rb.velocity;
@@ -50,7 +52,7 @@ public class Rewind : MonoBehaviour
 	}
 
 	void Record() {
-		if (rb.velocity.magnitude == 0)
+		if (rb.velocity.magnitude < 0.2f)
 			return;
 
 		// Remove from the end
@@ -65,7 +67,7 @@ public class Rewind : MonoBehaviour
 	void StartRewind() {
 		rewinding = true;
 		Time.timeScale = slowdownSpeed;
-		GetComponent<Rigidbody2D>().isKinematic = true;
+		rb.isKinematic = true;
 		GetComponent<Collider2D>().enabled = false;
 	}
 
@@ -84,9 +86,5 @@ public class Rewind : MonoBehaviour
 
 	void OnDisable() {
 		controls.Disable();
-	}
-
-	void OnMouseOver() {
-		Debug.Log("Moused over");	
 	}
 }
