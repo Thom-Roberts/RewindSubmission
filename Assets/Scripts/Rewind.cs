@@ -42,16 +42,17 @@ public class Rewind : MonoBehaviour
 			transform.position = point.position;
 			transform.rotation = point.rotation;
 			mostRecentVelocity = point.velocity;
-
 			points.RemoveAt(0);
 		}
 		else {
 			StopRewind();
-			rb.velocity = mostRecentVelocity;
 		}
 	}
 
 	void Record() {
+		if (rb.velocity.magnitude == 0)
+			return;
+
 		// Remove from the end
 		if(points.Count > Mathf.Round(maxRecordTime / Time.fixedDeltaTime)) {
 			points.RemoveAt(points.Count - 1);
@@ -71,8 +72,10 @@ public class Rewind : MonoBehaviour
 	void StopRewind() {
 		rewinding = false;
 		Time.timeScale = 1.0f;
-		GetComponent<Rigidbody2D>().isKinematic = false;
+		rb.isKinematic = false;
 		GetComponent<Collider2D>().enabled = true;
+		rb.velocity = mostRecentVelocity;
+
 	}
 
 	void OnEnable() {

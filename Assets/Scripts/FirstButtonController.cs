@@ -9,10 +9,6 @@ public class FirstButtonController : MonoBehaviour
     // Start is called before the first frame update
     void Start() {
         rb = ball.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector3.right * startSpeed;
-    }
-
-    private void LateUpdate() {
-        rb.velocity = startSpeed * (rb.velocity.normalized);
+        rb.velocity = Vector2.right * startSpeed;
     }
 }
